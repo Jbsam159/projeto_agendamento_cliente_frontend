@@ -12,6 +12,7 @@
         <div class="hidden md:flex space-x-6">
           <router-link to="/login" class="text-gray-700 hover:text-blue-600 font-medium">Login</router-link>
           <router-link to="/register" class="text-gray-700 hover:text-blue-600 font-medium">Registrar</router-link>
+          <router-link to="/appointments" class="text-gray-700 hover:text-blue-600 font-medium">Agendamentos</router-link>
         </div>
 
         <!-- Mobile menu button -->

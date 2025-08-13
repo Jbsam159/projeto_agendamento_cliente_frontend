@@ -36,27 +36,31 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { login } from "@/services/AuthService";
 
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
 const router = useRouter();
 
 const handleLogin = async () => {
   try {
-    const res = await axios.post('http://localhost:3000/auth/login', {
-      email: email.value,
-      password: password.value
-    });
-    localStorage.setItem('token', res.data.token);
-    router.push('/');
-    alert('Login Realizado Com Sucesso');
-  } catch (err) {
-    alert('Erro ao fazer login. Verifique as credenciais.');
-    console.error(err);
+    const data = await login(email.value, password.value);
+
+    console.log("Login Response:", data); // Aqui já vai estar no formato certo
+
+    localStorage.setItem("token", data.token);
+    if (data.client?.id) {
+      localStorage.setItem("clientId", data.client.id);
+    }
+
+    router.push("/appointments");
+  } catch (error) {
+    errorMessage.value = "Credenciais inválidas";
+    console.error("Erro ao fazer login:", error);
   }
 };
 </script>
