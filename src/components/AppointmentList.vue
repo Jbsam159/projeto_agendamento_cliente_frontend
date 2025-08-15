@@ -9,7 +9,10 @@
         class="py-3"
       >
         <p class="font-semibold text-gray-800">{{ appointment.client.name }}</p>
-        <p class="text-sm text-gray-500">{{ appointment.description }} {{ appointment.datetime }} às {{ appointment.time }}</p>
+        <p class="text-sm text-gray-500">
+          {{ appointment.description }} 
+          {{ formatDateTime(appointment.datetime) }} <!-- Alteração apenas aqui -->
+        </p>
       </li>
     </ul>
 
@@ -18,10 +21,12 @@
 </template>
 
 <script setup>
+import { formatDateTime } from '@/utils/dateFormatter'; // Adição única aqui
+
 defineProps({
   appointments: {
     type: Array,
     required: true
   }
-})
+});
 </script>
