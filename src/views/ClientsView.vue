@@ -30,7 +30,7 @@
               Editar
             </button>
             <button
-              @click="deleteClient(client.id)"
+              @click="removeClient(client.id)"
               class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
             >
               Excluir
@@ -44,21 +44,35 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getAllClients } from "@/services/ClientsService";
+import { getAllClients, deleteClient } from "@/services/ClientsService";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const clients = ref([]);
 
+const loadClients = async () => {
+  const token = localStorage.getItem("token");
+  const data = await getAllClients(token);
+  clients.value = data;
+};
+
 const editClient = (id) => {
   router.push(`/clients/${id}/edit`);
 };
 
-onMounted(async () => {
-  const token = localStorage.getItem("token");
-  const data = await getAllClients(token);
-  clients.value = data;
-});
+const removeClient = async (id) => {
+
+  if(confirm("Tem certeza que deseja excluir esse cliente?")) {
+
+    const token = localStorage.getItem("token")
+    await deleteClient(id,token)
+    await loadClients()
+
+  }
+
+}
+
+onMounted(loadClients);
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);

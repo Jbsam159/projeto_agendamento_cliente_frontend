@@ -28,3 +28,15 @@ export const updateClient = async (id: number, clientData: any, token: string) =
   );
   return response.data;
 };
+
+export const deleteClient = async(id: number, token: string) => {
+
+  const response = await axios.delete(`${API_URL}/delete/${id}`, {
+
+    headers: { Authorization: `Bearer ${token}` }
+
+  })
+
+  return response.data
+
+}
