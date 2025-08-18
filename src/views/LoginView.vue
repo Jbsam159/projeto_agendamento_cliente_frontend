@@ -31,6 +31,9 @@
         >
           Entrar
         </button>
+
+        <p>Você esqueceu sua senha?<router-link to="/forgotpassword">Redefina Aqui</router-link></p>
+
       </form>
     </div>
   </div>
